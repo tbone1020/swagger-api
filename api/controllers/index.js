@@ -1,5 +1,9 @@
 'use strict';
+  console.log('this is index.js');
 /*
+ npm i --save-dev swagger-editor
+
+
  'use strict' is not required but helpful for turning syntactical errors into true errors in the program flow
  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode
 */
@@ -28,6 +32,8 @@ module.exports = {
   mainApi: mainApi
 };
 
+
+
 /*
   Functions in a127 controllers used for operations should take two parameters:
 
@@ -35,10 +41,20 @@ module.exports = {
   Param 2: a handle to the response object
  */
 function mainApi(req, res){
+  console.log(__dirname+' failed');
   // variables defined in the Swagger document can be referenced using req.swagger.params.{parameter_name}
-  var name = req.swagger.params.name.value || 'stranger';
-  var hello = util.format('Hello there, %s!', name);
-
+  // var name = req.swagger.params.name.value || 'stranger';
+  var hello = util.format('Hello there, %s!');
   // this sends back a JSON response which is a single string
+
   res.json(hello);
+  // return jsonObj;
 }
+function viewObj(){
+  console.log('viewObj function');
+}
+
+
+
+
+

@@ -1,67 +1,127 @@
 swagger: "2.0"
-info:
+info: # 9:38
   version: "0.0.1"
-  title: The swagger api app
-  description: This is a desc of the API
+  title: The Bootstrap API
+  description: API that returns and adds people and their hobbies
 # during dev, should point to your local machine
 host: localhost:10010
 # basePath prefixes all resource paths 
 basePath: /
-# 
 schemes:
   # tip: remove http to make production-grade
   - http
   - https
-# format of bodies a client can send (Content-Type)
 consumes:
-  - application/json
-# format of the responses to the client (Accepts)
+  - application/json # format of bodies a client can send (Content-Type)
 produces:
-  - application/json
+  - application/json # format of the responses to the client (Accepts)
 paths:
-  /trent:
+  /boot:
     # binds a127 app logic to a route
     # File name
     x-swagger-router-controller: index
     get:
-      description: Returns 'Hello' to the caller
+      description: Returns a JSON Object of all people
       # used as the method name of the controller
       # What function to call, make sure to export it
-      operationId: mainApi
-      parameters:
-        - name: name
-          in: query
-          description: The name of the person to whom to say hello
-          required: false
-          type: string
-        - occupation: occupation
-          in: query
-          description: The job of the person
-          required: false
-          type: string
+      operationId: getAllPeople
       responses:
         "200":
           description: Success finding it
           schema:
             # a pointer to a definition
-            $ref: "#/definitions/HelloWorldResponse"
+            $ref: "#/definitions/bootObject"
         "404":
-          description: Could not find it
+          description: Could not find the boot object
         # responses may fall through to errors
         default:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+    post:
+      operationId: "addPerson"
+      parameters:
+        - name: name
+          in: query
+          description: Name of person
+          required: true
+          type: string
+        - name: username
+          in: query
+          description: Person's username
+          required: true
+          type: string
+        - name: occupation
+          in: query
+          description: Person's occupation
+          required: true
+          type: string
+        - name: hobbies
+          in: query
+          description: Person's hobbies
+          required: true
+          type: array
+          collectionFormat: csv
+          items:
+            type: string
+      responses:
+        201:
+          description: For creating a new person
+        404:
+          description: Failed creating a new person
+          
+  /boot/{person}:  
+    parameters:
+      - name: person
+        in: path
+        description: User ID
+        type: string
+        required: true
+    get:
+        operationId: "getPerson"
+        responses:
+          200:
+            description: success grabbing person with their 
+            schema:
+              $ref: '#/definitions/bootObject'
+          404:
+            description: failed grabbing person with their ID
+    delete: 
+      operationId: "deletePerson"
+      parameters:
+        - name: person
+          in: path
+          description: "Deleting person"
+          type: string
+          required: true
+      responses:
+        204:
+          description: "Success deleting person"
+        404:
+          description: "Failed deleting person"
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
 definitions:
-  HelloWorldResponse:
-    required:
-      - message
+  bootObject:
+    type: "object"
     properties:
-      message:
-        type: string
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+        example: "Your Name"
+      username:
+        type: "string"
+        example: "Your username Name"
+      occupation:
+        type: "string"
+        example: "Front End Web Developer"
+      hobbies:
+        type: array
+        items:
+          type: string
   ErrorResponse:
     required:
       - message

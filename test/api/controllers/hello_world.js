@@ -1,17 +1,16 @@
 var should = require('should');
 var request = require('supertest');
 var server = require('../../../app');
-
 describe('controllers', function() {
 
-  describe('hello_world', function() {
+  describe('index', function() {
 
-    describe('GET /trent', function() {
+    describe('GET /boot', function() {
 
       it('should return a default string', function(done) {
 
         request(server)
-          .get('/trent')
+          .get('/boot')
           .set('Accept', 'application/json')
           .expect('Content-Type', /json/)
           .expect(200)
@@ -27,8 +26,7 @@ describe('controllers', function() {
       it('should accept a name parameter', function(done) {
 
         request(server)
-          .get('/trent')
-          .query({ name: 'Scott'})
+          .get('/boot')
           .set('Accept', 'application/json')
           .expect('Content-Type', /json/)
           .expect(200)
