@@ -1,0 +1,16 @@
+bootObject:
+  type: "object"
+  properties:
+    id:
+      type: "integer"
+      format: "int64"
+    name:
+      type: "string"
+      example: "Your Name"
+    occupation:
+      type: "string"
+      example: "Web Developer"
+    friends:
+      type: array
+      items:
+        type: string

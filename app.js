@@ -17,7 +17,9 @@ SwaggerConnect.create(config, function(err, swaggerConnect) {
   var port = process.env.PORT || 10010;
   app.listen(port);
 
-  if (swaggerConnect.runner.swagger.paths['/trent']) {
-    console.log('Project is running, try this:\ncurl http://127.0.0.1:' + port + '/trent?name=Trent');
+  if (swaggerConnect.runner.swagger.paths['/boot']) {
+    console.log('Project is running, try this:\ncurl http://127.0.0.1:' + port + '/');
+  } else {
+  	console.log(__dirname + ' Failed to connect boot');
   }
 });
